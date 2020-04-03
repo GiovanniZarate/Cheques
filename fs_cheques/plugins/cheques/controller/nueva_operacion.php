@@ -242,7 +242,6 @@ class nueva_operacion extends fbase_controller
         } else {
             //$art0->referencia = $art0->get_new_referencia();
         }
-
         if ($art0->exists()) {
             $this->results[] = $art0->get($art0->nrocheque);
         } else {
@@ -263,6 +262,7 @@ class nueva_operacion extends fbase_controller
 
             if ($art0->save()) {
                 //$this->results[] = $art0;
+                //AGREGADO PARA MOSTRAR NOMBRE DE BANCO Y NOMBRE DE CLIENTE
                $this->results[] = $art0->get($art0->nrocheque);
             }
         }
