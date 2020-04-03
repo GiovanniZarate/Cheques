@@ -1,0 +1,161 @@
+<div class="modal" id="modal_articulos">
+   <div class="modal-dialog" style="width: 99%; max-width: 1000px;">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Buscar cheques</h4>
+            <p class="help-block">
+               <span class="glyphicon glyphicon-info-sign"></span>
+               Coloca el puntero sobre un precio para ver la fecha en la que fue actualizado.
+            </p>
+         </div>
+         <div class="modal-body">
+            <form id="f_buscar_articulos" name="f_buscar_articulos" action="{$fsc->url()}" method="post" class="form">
+               <input type="hidden" name="codcliente" value="{$fsc->cliente_s->idcliente}"/>
+               
+               <div class="container-fluid">
+                  <div class="row">
+                     <div class="col-sm-4">
+                        <div class="input-group">
+                           <input class="form-control" type="text" name="query" autocomplete="off"/>
+                           <span class="input-group-btn">
+                              <button class="btn btn-primary" type="submit">
+                                 <span class="glyphicon glyphicon-search"></span>
+                              </button>
+                           </span>
+                        </div>                       
+                     </div>
+                     <div class="col-sm-4">
+                        <select class="form-control" name="codbanco" onchange="buscar_articulos()">
+                           <option value="">Cualquier Banco</option>
+                           <option value="">------</option>
+                           {loop="$fsc->banco->all()"}
+                           <option value="{$value->idbanco}">{$value->nombre}</option>
+                           {/loop}
+                        </select>
+                     </div>
+                     <div class="col-sm-4">
+                        <select class="form-control" name="codtipo" onchange="buscar_articulos()">
+                           <option value="">Cualquier Tipo</option>
+                           <option value="">------</option>
+                           <option value="C">CHEQUE</option>
+                           <option value="E">EFECTIVO</option>
+                        </select>
+                     </div>
+                  </div>
+               </div>
+            </form>
+         </div>
+         <ul class="nav nav-tabs" id="nav_articulos" style="display: none;">
+            <li id="li_mis_articulos">
+               <a href="#" id="b_mis_articulos">Mi catálogo</a>
+            </li>   
+            <li id="li_nuevo_articulo">
+               <a href="#" id="b_nuevo_articulo">
+                  <span class="glyphicon glyphicon-plus"></span>&nbsp; Nuevo
+               </a>
+            </li>
+         </ul>
+         <div id="search_results"></div>  
+         
+         <div id="nuevo_articulo" class="modal-body" style="display: none;">
+            <form name="f_nuevo_articulo" action="{$fsc->url()}" method="post" class="form">
+               <div class="container-fluid">
+                  <div class="row">
+                     <div class="col-sm-4">
+                        <div class="form-group">
+                           Nro. Cheque:
+                           <div class="input-group">
+                               <input class="form-control" type="text" id="nrocheque" name="nrocheque" required="" autocomplete="off"/>
+                              <span class="input-group-btn" title="Borrar">
+                                 <button class="btn btn-default" type="button" onclick="document.f_nuevo_articulo.nrocheque.value='';document.f_nuevo_articulo.vbanco.focus();">
+                                    <span class="glyphicon glyphicon-edit"></span>
+                                 </button>
+                              </span>
+                           </div>                           
+                        </div>
+                     </div>
+                     <div class="col-sm-4">
+                        <div class="form-group">
+                           Banco:
+                            <select name="vbanco" class="form-control">
+                            {loop="$fsc->banco->all()"}
+                              {if="$fsc->banco->idbanco==$value->idbanco"}
+                              <option value="{$value->idbanco}" selected="">{$value->nombre}</option>
+                              {else}
+                              <option value="{$value->idbanco}">{$value->nombre}</option>
+                              {/if}
+                            {/loop}
+                            </select> 
+                        </div>
+                     </div>
+                      <div class="col-sm-4">
+                        <div class="form-group">
+                           Nro. Cuenta:
+                           <input class="form-control" type="text" name="vnrocuenta"  autocomplete="off"/>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-sm-4">
+                        <div class="form-group">
+                          Fecha Emisión:
+                          <input type="text" class="form-control datepicker"  name="fechaemision" required="" autocomplete="off" />                                             
+                        </div>
+                     </div>
+                     <div class="col-sm-4">
+                        <div class="form-group">
+                           Cliente:                           
+                            <select name="vcliente" class="form-control">
+                            {loop="$fsc->cliente->all()"}
+                              {if="$fsc->cliente->idcliente==$value->idcliente"}
+                              <option value="{$value->idcliente}" selected="">{$value->nombre}</option>
+                              {else}
+                              <option value="{$value->idcliente}">{$value->nombre}</option>
+                              {/if}
+                            {/loop}
+                            </select>                                                                    
+                        </div>
+                     </div>
+                     <div class="col-sm-4">
+                        <div class="form-group">
+                           A orden de:
+                           <input class="form-control" type="text" name="vaordende"  autocomplete="off"/>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row">                    
+                     <div class="col-sm-4">
+                        <div class="form-group">
+                           Importe:
+                           <input type="number" name="vimporte" value="0" class="form-control" required="" autocomplete="off"/>
+                        </div>                         
+                     </div>
+                     <div class="col-sm-3">
+                            <div class="form-group">
+                              Fecha Pago:
+                              <input type="text" class="form-control datepicker"  name="vfechapago" required="" autocomplete="off" />                                             
+                            </div>
+                         </div>
+                          <div class="col-sm-2">
+                            <div class="form-group">
+                              Tipo:
+                              <select name="vtipo" class="form-control">                                     
+                                <option value="C">CHEQUE</option>
+                                <option value="E">EFECTIVO</option>
+                            </select>
+                            </div>
+                         </div>
+                     <div class="col-sm-3 text-right">
+                        <br/>
+                        <button class="btn btn-sm btn-primary" type="submit" onclick="new_articulo();return false;">
+                           <span class="glyphicon glyphicon-floppy-disk"></span>&nbsp; Guardar y seleccionar
+                        </button>
+                     </div>
+                  </div>                  
+               </div>
+            </form>
+         </div>
+      </div>
+   </div>
+</div>

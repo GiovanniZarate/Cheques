@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Document   : bancos.xml
+    Author     : Quintin Peralta R.
+    Description:
+        Estructura de la tabla bancos.
+-->
+<tabla>
+    <columna>
+        <nombre>idbanco</nombre>
+        <tipo>integer</tipo>
+        <nulo>NO</nulo>
+    </columna>
+    <columna>
+        <nombre>nombre</nombre>
+        <tipo>character varying(50)</tipo>
+        <nulo>NO</nulo>
+    </columna>
+	<columna>
+        <nombre>direccion</nombre>
+        <tipo>character varying(200)</tipo>
+        <nulo>YES</nulo>
+    </columna>
+	<columna>
+        <nombre>telefono</nombre>
+        <tipo>character varying(50)</tipo>
+        <nulo>YES</nulo>
+    </columna>
+    <restriccion>
+        <nombre>bancos_pkey</nombre>
+        <consulta>PRIMARY KEY (idbanco)</consulta>
+    </restriccion>
+</tabla>

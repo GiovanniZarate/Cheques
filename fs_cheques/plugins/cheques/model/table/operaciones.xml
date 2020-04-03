@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Document   : operaciones.xml
+    Description:
+        Estructura de la tabla operaciones.
+-->
+<tabla>
+<columna>
+    <nombre>idoperaciones</nombre>
+    <tipo>integer</tipo>
+    <nulo>NO</nulo>
+</columna>
+<columna>
+    <nombre>fec_operacion</nombre>
+    <tipo>date</tipo>
+    <nulo>NO</nulo>
+</columna>
+<columna>
+    <nombre>idestado</nombre>
+    <tipo>integer</tipo>
+    <nulo>NO</nulo>
+</columna>
+<columna>
+    <nombre>idcliente</nombre>
+    <tipo>integer</tipo>
+    <nulo>NO</nulo>
+</columna>
+<columna>
+    <nombre>observacion</nombre>
+    <tipo>varchar(250)</tipo>
+    <nulo>YES</nulo>
+</columna>
+<restriccion>
+    <nombre>fk_operaciones_cliente</nombre>
+    <consulta>FOREIGN KEY (idcliente) REFERENCES clientes (idcliente) ON DELETE RESTRICT ON UPDATE CASCADE</consulta>
+</restriccion>
+<restriccion>
+    <nombre>fk_operaciones_estado</nombre>
+    <consulta>FOREIGN KEY (idestado) REFERENCES estado (idestado) ON DELETE RESTRICT ON UPDATE CASCADE</consulta>
+</restriccion>
+<restriccion>
+    <nombre>operaciones_pkey</nombre>
+    <consulta>PRIMARY KEY (idoperaciones)</consulta>
+</restriccion>
+</tabla>

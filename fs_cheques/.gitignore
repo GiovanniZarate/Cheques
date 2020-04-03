@@ -1,0 +1,7 @@
+/nbproject/
+/.idea/
+/doc/
+/tmp/
+.DS_Store
+.htaccess
+config.php

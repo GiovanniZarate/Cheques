@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Document   : estado.xml
+    Author     : Quintin Peralta R.
+    Description:
+        Estructura de la tabla estado.
+-->
+<tabla>
+    <columna>
+        <nombre>idestado</nombre>
+        <tipo>serial</tipo>
+        <nulo>NO</nulo>
+    </columna>
+    <columna>
+        <nombre>nombre</nombre>
+        <tipo>character varying(45)</tipo>
+        <nulo>NO</nulo>
+    </columna>
+	<restriccion>
+        <nombre>clientes_pkey</nombre>
+        <consulta>PRIMARY KEY (idestado)</consulta>
+    </restriccion>
+	<restriccion>
+        <nombre>uniq_nombre_estado</nombre>
+        <consulta>UNIQUE (nombre)</consulta>
+    </restriccion>
+</tabla>

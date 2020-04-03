@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Document   : clientes.xml
+    Author     : Quintin Peralta R.
+    Description:
+        Estructura de la tabla clientes.
+-->
+<tabla>
+    <columna>
+        <nombre>idcliente</nombre>
+        <tipo>serial</tipo>
+        <nulo>NO</nulo>
+    </columna>
+    <columna>
+        <nombre>nombre</nombre>
+        <tipo>character varying(150)</tipo>
+        <nulo>NO</nulo>
+    </columna>
+	<columna>
+        <nombre>direccion</nombre>
+        <tipo>character varying(200)</tipo>
+        <nulo>YES</nulo>
+    </columna>
+	<columna>
+        <nombre>ruc</nombre>
+        <tipo>character varying(20)</tipo>
+        <nulo>NO</nulo>
+    </columna>
+	<columna>
+        <nombre>telefono</nombre>
+        <tipo>character varying(50)</tipo>
+        <nulo>NO</nulo>
+    </columna>
+    <restriccion>
+        <nombre>clientes_pkey</nombre>
+        <consulta>PRIMARY KEY (idcliente)</consulta>
+    </restriccion>
+	<restriccion>
+        <nombre>uniq_ruc_clientes</nombre>
+        <consulta>UNIQUE (ruc)</consulta>
+    </restriccion>
+</tabla>

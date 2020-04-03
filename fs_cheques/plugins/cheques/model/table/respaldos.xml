@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Document   : respaldos.xml
+    Description:
+        Estructura de la tabla respaldos.
+-->
+<tabla>
+<columna>
+    <nombre>idrespaldo</nombre>
+    <tipo>serial</tipo>
+    <nulo>NO</nulo>
+    <defecto>nextval('respaldos_idrespaldo_seq'::regclass)</defecto>
+</columna>
+<columna>
+    <nombre>idoperacion</nombre>
+    <tipo>integer</tipo>
+    <nulo>NO</nulo>
+</columna>
+<columna>
+    <nombre>nrocheque</nombre>
+    <tipo>integer</tipo>
+    <nulo>NO</nulo>
+</columna>
+<columna>
+    <nombre>idbanco</nombre>
+    <tipo>integer</tipo>
+    <nulo>NO</nulo>
+</columna>
+<columna>
+    <nombre>importe</nombre>
+    <tipo>double</tipo>
+    <nulo>NO</nulo>
+    <defecto>0</defecto>
+</columna>
+<restriccion>
+    <nombre>fk_respaldos_cheques1</nombre>
+    <consulta>FOREIGN KEY (nrocheque) REFERENCES cheques (nrocheque) ON DELETE NO ACTION ON UPDATE NO ACTION</consulta>
+</restriccion>
+<restriccion>
+    <nombre>fk_respaldos_cheques1</nombre>
+    <consulta>FOREIGN KEY (idbanco) REFERENCES cheques (idbanco) ON DELETE NO ACTION ON UPDATE NO ACTION</consulta>
+</restriccion>
+<restriccion>
+    <nombre>respaldos_pkey</nombre>
+    <consulta>PRIMARY KEY (idrespaldo)</consulta>
+</restriccion>
+</tabla>

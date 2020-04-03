@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Document   : cheques.xml
+    Description:
+        Estructura de la tabla cheques.
+-->
+<tabla>
+<columna>
+    <nombre>nrocheque</nombre>
+    <tipo>integer</tipo>
+    <nulo>NO</nulo>
+</columna>
+<columna>
+    <nombre>idbanco</nombre>
+    <tipo>integer</tipo>
+    <nulo>NO</nulo>
+</columna>
+<columna>
+    <nombre>nrocuenta</nombre>
+    <tipo>varchar(30)</tipo>
+    <nulo>YES</nulo>
+</columna>
+<columna>
+    <nombre>fec_emision</nombre>
+    <tipo>date</tipo>
+    <nulo>NO</nulo>
+</columna>
+<columna>
+    <nombre>fec_pago</nombre>
+    <tipo>date</tipo>
+    <nulo>YES</nulo>
+</columna>
+<columna>
+    <nombre>importe</nombre>
+    <tipo>double</tipo>
+    <nulo>NO</nulo>
+    <defecto>0</defecto>
+</columna>
+<columna>
+    <nombre>aordende</nombre>
+    <tipo>varchar(150)</tipo>
+    <nulo>YES</nulo>
+</columna>
+<columna>
+    <nombre>idcliente</nombre>
+    <tipo>integer</tipo>
+    <nulo>NO</nulo>
+</columna>
+<columna>
+    <nombre>tipo</nombre>
+    <tipo>char(1)</tipo>
+    <nulo>NO</nulo>
+    <defecto>C</defecto>
+</columna>
+<restriccion>
+    <nombre>fk_cheques_banco</nombre>
+    <consulta>FOREIGN KEY (idbanco) REFERENCES bancos (idbanco) ON DELETE RESTRICT ON UPDATE CASCADE</consulta>
+</restriccion>
+<restriccion>
+    <nombre>fk_cheques_cliente</nombre>
+    <consulta>FOREIGN KEY (idcliente) REFERENCES clientes (idcliente) ON DELETE RESTRICT ON UPDATE CASCADE</consulta>
+</restriccion>
+<restriccion>
+    <nombre>cheques_pkey</nombre>
+    <consulta>PRIMARY KEY (nrocheque,idbanco)</consulta>
+</restriccion>
+</tabla>

@@ -1,0 +1,283 @@
+{include="header"}
+
+<script type="text/javascript">
+   $(document).ready(function() {
+      if(window.location.hash.substring(1) == 'nuevo')
+      {
+         $("#modal_largo").modal('show');
+         document.f_nuevo_.vnumero.focus();
+      }
+      else
+      {
+         document.f_custom_search.query.focus();
+      }
+      
+      $("#b_nuevo_").click(function(event) {
+         event.preventDefault();
+         $("#modal_largo").modal('show');
+         document.f_nuevo_.vnumero.focus();
+      });
+   });
+   
+   
+</script>
+
+
+
+
+<div class="container-fluid hidden-print" >
+    <div class="row">
+        <div class="col-sm-6 col-xs-6">
+            <div class="btn-group hidden-xs">
+            <a class="btn btn-sm btn-default" href="{$fsc->url()}" title="Recargar la página">
+              <span class="glyphicon glyphicon-refresh"></span>
+            </a>
+            {if="$fsc->page->is_default()"}
+               <a class="btn btn-sm btn-default active" href="{$fsc->url()}&amp;default_page=FALSE" title="Desmarcar como página de inicio">
+                    <span class="glyphicon glyphicon-home"></span>
+                </a>
+            {else}
+            <a class="btn btn-sm btn-default" href="{$fsc->url()}&amp;default_page=TRUE" title="Marcar como página de inicio">
+              <span class="glyphicon glyphicon-home"></span>
+            </a>
+            {/if}
+          </div>
+          
+          <div class="btn-group">
+             <a id="b_nuevo_" class="btn btn-sm btn-success" href="#">
+                <span class="glyphicon glyphicon-plus"></span>
+                <span class="hidden-xs">&nbsp;Nuevo</span>
+            </a>           
+          </div>   
+        </div>
+        <!-- AQUI COMPLETA LAS 12 COLUMNAS-->
+        <div class="col-sm-6 col-xs-6 text-right">
+         <h2 style="margin-top: 0px;">
+            <i class="fa " aria-hidden="true"></i>Mantenimiento de Cheques 
+         </h2>
+        </div>
+    </div>
+    
+     <!-- AQUI SE CREA EL PANEL CON PESTAÑA-->
+     <div id="tab_cuentaspublicas" role="tabpanel">
+         <ul class="nav nav-tabs">
+            <li role="presentation" class="active">
+                <a href="{$fsc->url()}">
+                <span class="glyphicon glyphicon-search"></span>
+                <span class="hidden-xs">&nbsp; Resultados</span>  
+                <span class="badge">{$fsc->total_resultados}</span>
+             </a>
+            </li>
+        </ul>
+         <!-- EL CONTENEDOR PARA MOSTRAR LOS DATOS -->
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="home">
+                <form name="f_custom_search" action="{$fsc->url()}" method="post" class="form">
+                    <div class="container-fluid" style="margin-top: 15px; margin-bottom: 10px;">
+                        <div class="row">
+                            <!-- USA 4 COLUMNAS PARA CREAR EL BOTON DE BUSQUEDA -->
+                            <div class="col-sm-4">
+                                <div class="input-group">
+                                  <input class="form-control" type="text" name="query" value="{$fsc->query}" autocomplete="off" placeholder="Buscar">
+                                  <span class="input-group-btn hidden-sm">
+                                    <button class="btn btn-primary" type="submit">
+                                       <span class="glyphicon glyphicon-search"></span>
+                                    </button>
+                                  </span>
+                                </div>
+                              </div>                             
+                               <!-- DEJA CUATRO COLUMNAS DE ESPACIO -->
+                              <div class="col-sm-4"></div>  
+                              <!-- USA 4 COLUMNAS PARA EL COMBO DE ORDENACION -->
+                              <div class="col-sm-4">
+                                <div class="input-group">
+                                  <div class="input-group-addon">
+                                      <span class="glyphicon glyphicon-sort-by-attributes-alt"></span>
+                                  </div>
+                                  <select name="orden" class="form-control" onchange="this.form.submit()">
+                                      <option value="nrocheque ASC"{if="$fsc->orden=='nrocheque ASC'"} selected=""{/if}>Orden: Numero Cheque</option>
+                                      <option value="nrocheque DESC"{if="$fsc->orden=='nrocheque DESC'"} selected=""{/if}>Orden: Numero Cheque descendente</option>  
+                                      <option value="fec_emision ASC">Orden: Fecha Emisión</option>
+                                      <option value="fec_emision DESC"{if="$fsc->orden=='fec_emision DESC'"} selected=""{/if}>Orden: Fecha Emisión descendente</option>
+                                      <option value="aordende ASC"{if="$fsc->orden=='aordende ASC'"} selected=""{/if}>Orden: Orden de</option>
+                                      <option value="aordende DESC"{if="$fsc->orden=='aordende DESC'"} selected=""{/if}>Orden: Orden de descendente</option>                                          
+                                      <option value="importe ASC"{if="$fsc->orden=='importe ASC'"} selected=""{/if}>Orden: Importe</option>
+                                      <option value="importe DESC"{if="$fsc->orden=='importe DESC'"} selected=""{/if}>Orden: Importe descendente</option>                                          
+                                   </select>                   
+                                </div>
+                              </div>
+                        </div>
+                    </div>
+                </form>
+                <!-- PARA CARGAR LOS DATOS EN LA GRILLA -->
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                          <tr>
+                              <th class="text-left">Nro. Cheque</th>
+                              <th class="text-left">Banco</th>
+                              <th class="text-left">Nro. Cuenta</th>  
+                              <th class="text-left">Fecha Emisión</th>     
+                              <th class="text-left">A orden de</th>  
+                              <th class="text-left">Importe</th>                                   
+                              <th class="text-left">Cliente</th>   
+                              <th class="text-left">Tipo</th>                                 
+                             <th class="text-right">Fecha Pago</th>
+                          </tr>
+                      </thead>
+                      <!-- carga los datos en la grilla trayendo los datos de la tabla-->  
+                      {loop="$fsc->resultados"}
+                      <tr class='clickableRow info' href='{$value->url()}'>              
+                        <td>{$value->nrocheque}</td>                        
+                        <td>{$value->banconombre}</td>  
+                        <td>{$value->nrocuenta}</td>
+                        <td>{$value->fec_emision}</td>
+                        <td>{$value->aordende}</td>
+                        <td>{$value->importe}</td>
+                        <td>{$value->clientenombre}</td>
+                        <td>{$value->tipo}</td>
+                        <td class="text-right">{$value->fec_pago}</td>                        
+                      </tr>
+                      {else}
+                      <tr class="warning">
+                         <td colspan="9">Sin resultados.</td>
+                      </tr>
+                      {/loop}
+                    </table>                    
+                </div>
+                <!-- PAGINACION -->
+                <div class="container-fluid">
+                   <div class="row">
+                      <div class="col-sm-12 text-center">
+                         <ul class="pagination">
+                            {loop="$fsc->paginas()"}
+                            <li{if="$value['actual']"} class="active"{/if}>
+                               <a href="{$value['url']}">{$value['num']}</a>
+                            </li>
+                            {/loop}
+                         </ul>
+                      </div>
+                   </div>
+                </div> 
+            </div>
+        </div>
+     </div>        
+</div>
+
+
+<form class="form-horizontal" role="form" id="f_nuevo_" name="f_nuevo_" action="{$fsc->url()}" method="post">
+<div class="modal fade bd-example-modal-lg" id="modal_largo" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+        <!-- CABECERA DEL MODAL -->
+        <div class="modal-header">
+           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+           <h4 class="modal-title">
+              <span class="glyphicon glyphicon-briefcase"></span>
+              &nbsp; Nuevo Cheque
+           </h4>
+          
+        </div>
+        <div class="modal-body">
+            
+                <div class="row">  
+                    <div class="form-group">
+                        <label for="vnumero" class="col-sm-2 control-label">Nro Cheque:</label>
+                        <div class="col-sm-6">
+                            <input class="form-control" type="text" id="vnumero" name="vnumero"  autocomplete="off" required=""/>                 
+                        </div>
+                    </div>  
+               </div>
+            <div class="row">  
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">
+                      Banco
+                    </label>
+                    <div class="col-sm-6">
+                       <select name="vbanco" class="form-control">
+                          {loop="$fsc->banco->all()"}
+                          <option value="{$value->idbanco}"{if="$value->is_default()"} selected=""{/if}>{$value->nombre}</option>
+                          {/loop}
+                       </select>
+                    </div>
+                 </div>   
+                 </div>
+                <div class="row">
+                   <div class="form-group">
+                        <label for="vnrocuenta" class="col-sm-2 control-label">Nro. Cuenta:</label>
+                        <div class="col-sm-4">
+                            <input class="form-control" type="text"  name="vnrocuenta"  autocomplete="off" required=""/>                 
+                        </div>
+                    </div>                                       
+                </div>
+               <div class="row">                    
+                   <div class="form-group">
+                        <label for="vfecha" class="col-sm-2 control-label">Fec. Emisión:</label>
+                        <div class="col-sm-3">
+                            <input type="text" id="vfecha" name="vfechaemision" class="form-control datepicker" value="{$fsc->today()}" autocomplete="off" required=""/>                                                       
+                            
+                        </div>                       
+                    </div>
+               </div>   
+            <div class="row">
+             <div class="form-group">
+                    <label class="col-sm-2 control-label">
+                       Cliente
+                    </label>
+                    <div class="col-sm-6">
+                       <select name="vcliente" class="form-control">
+                          {loop="$fsc->cliente->all()"}
+                          <option value="{$value->idcliente}"{if="$value->is_default()"} selected=""{/if}>{$value->nombre}</option>
+                          {/loop}
+                       </select>
+                    </div>
+                 </div>  
+             </div>  
+                <div class="row">                   
+                   <div class="form-group">
+                        <label for="vordende" class="col-sm-2 control-label">A orden de:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" type="text"  name="vordende"  autocomplete="off" />                 
+                        </div>
+                    </div>                                       
+               </div> 
+                <div class="row">                    
+                    <div class="form-group">
+                        <label for="vimporte" class="col-sm-2 control-label">Importe:</label>
+                        <div class="col-sm-4">
+                            <input class="form-control" type="number"  name="vimporte"  autocomplete="off" required=""/>                 
+                        </div>
+                    </div>                                        
+                </div>   
+                 <div class="row">  
+                        <div class="form-group">
+                            <label for="vtipo" class="col-sm-2 control-label">Tipo</label>
+                            <div class="col-sm-4">                                
+                                <select name="vtipo" class="form-control">                                     
+                                    <option value="C">CHEQUE</option>
+                                    <option value="E">EFECTIVO</option>
+                                </select>
+                            </div>
+                        </div>  
+                   </div>
+            
+                                                                                                                                             
+        </div>
+        
+         <!-- PIE DE PAGINA DEL MODAL -->
+        <div class="modal-footer">
+          <button class="btn btn-sm btn-primary" type="submit">
+             <span class="glyphicon glyphicon-floppy-disk"></span>&nbsp; Guardar
+          </button>
+       </div>
+        
+     
+    </div>
+  </div>
+</div>
+</form>
+
+
+
+
+{include="footer"}

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Document   : cheque_operacion.xml
+    Description:
+        Estructura de la tabla cheque_operacion.
+-->
+<tabla>
+<columna>
+    <nombre>idcheque_operacion</nombre>
+    <tipo>serial</tipo>
+    <nulo>NO</nulo>
+    <defecto>nextval('cheque_operacion_idcheque_operacion_seq'::regclass)</defecto>
+</columna>
+<columna>
+    <nombre>idoperaciones</nombre>
+    <tipo>integer</tipo>
+    <nulo>NO</nulo>
+</columna>
+<columna>
+    <nombre>cheques_nrocheque</nombre>
+    <tipo>integer</tipo>
+    <nulo>NO</nulo>
+</columna>
+<columna>
+    <nombre>cheques_codbanco</nombre>
+    <tipo>integer</tipo>
+    <nulo>NO</nulo>
+</columna>
+<restriccion>
+    <nombre>fk_cheque_operacion_cheques1</nombre>
+    <consulta>FOREIGN KEY (cheques_nrocheque) REFERENCES cheques (nrocheque) ON DELETE NO ACTION ON UPDATE NO ACTION</consulta>
+</restriccion>
+<restriccion>
+    <nombre>fk_cheque_operacion_operaciones</nombre>
+    <consulta>FOREIGN KEY (idoperaciones) REFERENCES operaciones (idoperaciones) ON DELETE CASCADE ON UPDATE CASCADE</consulta>
+</restriccion>
+<restriccion>
+    <nombre>cheque_operacion_pkey</nombre>
+    <consulta>PRIMARY KEY (idcheque_operacion)</consulta>
+</restriccion>
+<restriccion>
+    <nombre>unico_cheque_oper</nombre>
+    <consulta>UNIQUE (cheques_nrocheque,idoperaciones)</consulta>
+</restriccion>
+</tabla>
