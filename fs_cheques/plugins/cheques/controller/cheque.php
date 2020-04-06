@@ -117,7 +117,7 @@ class cheque extends fs_controller {
             $this->total_resultados = intval($data[0]['total']);
 
             $data2 = $this->db->select_limit("SELECT *, b.nombre banconombre,cli.nombre clientenombre, "
-                    . "case when tipo='C' then 'CHEQUE' ELSE 'EFECTIVO'END tipo "
+                    . "case when tipo='C' then 'CHEQUE' ELSE 'EFECTIVO'END tipo,'' nrooperacion,'' estado "
                     . "" . $sql . " "
                     . "ORDER BY " . $this->orden, FS_ITEM_LIMIT, $this->offset);
             if ($data2) {

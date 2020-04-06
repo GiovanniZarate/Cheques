@@ -23,6 +23,10 @@ class cheque_m extends fs_model {
     public $banconombre;
     public $clientenombre;
     
+    //PARA REPORTE DE CHEQUE
+    public $nrooperacion;
+    public $estado;
+    
     private static $search_tags;
     private static $cleaned_cache;
 
@@ -48,6 +52,9 @@ class cheque_m extends fs_model {
             $this->idbanco = $c['idbanco'];
             $this->banconombre = $c['banconombre'];
             $this->clientenombre = $c['clientenombre'];
+            
+            $this->nrooperacion = $c['nrooperacion'];
+            $this->estado = $c['estado'];
            
         } else {
             $this->nrocheque = 0;
@@ -59,8 +66,11 @@ class cheque_m extends fs_model {
             $this->idcliente = 0;
             $this->tipo = '';
             $this->idbanco = 0;   
-             $this->banconombre = '';
-              $this->clientenombre = '';
+            $this->banconombre = '';
+            $this->clientenombre = '';
+            
+            $this->nrooperacion = '';
+            $this->estado = '';
             
         }
     }
@@ -190,7 +200,8 @@ class cheque_m extends fs_model {
      */
     public function get($cod) {        
         $a = $this->db->select("SELECT nrocheque,nrocuenta,fec_emision,"
-                . "fec_pago,aordende,importe,c.idcliente,tipo,c.idbanco, b.nombre banconombre,cli.nombre clientenombre  "                
+                . "fec_pago,aordende,importe,c.idcliente,tipo,c.idbanco, "
+                . "b.nombre banconombre,cli.nombre clientenombre, '' nrooperacion, '' estado  "                
                 . "FROM " . $this->table_name . " c join bancos b on c.idbanco=b.idbanco "
                     . "join clientes cli on c.idcliente=cli.idcliente "
                 . "WHERE nrocheque = " . $this->var2str($cod) . ";");
@@ -346,7 +357,7 @@ public function get_search_tags()
         }
 
         if (count($artilist) <= 1) {
-            $sql = "SELECT *, b.nombre banconombre,cli.nombre clientenombre "
+            $sql = "SELECT *, b.nombre banconombre,cli.nombre clientenombre,'' nrooperacion,''estado "
                     . "FROM " . $this->table_name . " c join bancos b on c.idbanco=b.idbanco "
                     . "join clientes cli on c.idcliente=cli.idcliente ";
             $separador = ' WHERE';
