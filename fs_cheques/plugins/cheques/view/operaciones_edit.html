@@ -156,20 +156,7 @@ function eliminar_respaldo(id)
                   <span class="glyphicon glyphicon-time"></span>
                   <span class="hidden-xs">&nbsp; Pendiente</span>
                   <span class="caret"></span>
-               </button>
-               <ul class="dropdown-menu" role="menu">
-                  <li>
-                     <a id="b_aprobar" href="#">
-                        <span class="glyphicon glyphicon-ok"></span>&nbsp; Aprobado
-                     </a>
-                  </li>
-                  
-                  <li>
-                     <a id="b_valido" href="#">
-                        <span class="glyphicon glyphicon-ok"></span>&nbsp; Valido
-                     </a>
-                  </li>
-               </ul>
+               </button>               
             </div>
             {else}
             <a class="btn btn-sm btn-warning" href="#">
@@ -260,7 +247,32 @@ function eliminar_respaldo(id)
                {/if}
             </div>
          </div>
-        
+         <div class="col-md-2 col-sm-3">
+             <div class="form-group">
+               Estado:
+               {if="$fsc->albaran->ptefactura"}
+               <select class="form-control" name="codestado" id="codestado" >
+               {loop="$fsc->estado->all()"}
+                  {if="$value->idestado==$fsc->albaran->idestado"}
+                  <option value="{$value->idestado}" selected="">{$value->nombre}</option>
+                  {else}
+                  <option value="{$value->idestado}">{$value->nombre}</option>
+                  {/if}
+               {/loop}
+               </select>
+               {else}
+               <select class="form-control" name="codestado" disabled="">
+               {loop="$fsc->estado->all()"}
+                  {if="$value->idestado==$fsc->albaran->idestado"}
+                  <option value="{$value->idestado}" selected="">{$value->nombre}</option>
+                  {else}
+                  <option value="{$value->idestado}">{$value->nombre}</option>
+                  {/if}
+               {/loop}
+               </select>
+               {/if}
+             </div>
+         </div>
       </div>
    </div>
 
@@ -376,7 +388,7 @@ function eliminar_respaldo(id)
 
 
 <!-- PARA CARGAR NUEVO CONTINGENCIA MODAL-->
-{loop="$lineas"}
+{loop="$fsc->albarandeta"}
 <form name="f_nueva_cargarespaldo" action="{$fsc->url()}#detalles" method="post" class="form">
    <input type="hidden" name="codoperacion" value="{$fsc->albaran->idoperaciones}"/>
    <input type="hidden" name="codrespaldo" value=""/>

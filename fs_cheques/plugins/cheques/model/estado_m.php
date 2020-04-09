@@ -113,7 +113,7 @@ class estado_m extends fs_model{
       if(!$lista)
       {
          /// si no está en caché, leemos de la base de datos
-         $data = $this->db->select("SELECT idestado,nombre FROM ".$this->table_name."  ORDER BY nombre ASC;");
+         $data = $this->db->select("SELECT idestado,nombre FROM ".$this->table_name."  ORDER BY idestado ASC;");
          
          if($data)
          {

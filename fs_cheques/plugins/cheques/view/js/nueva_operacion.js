@@ -62,6 +62,7 @@ function add_articulo(nrocheque, banco, nrocuenta, fechaemi, fechapago, importe,
           <input type=\"hidden\" name=\"banco_" + numlineas + "\" value=\"" + banco + "\"/>  </td>\n\
       <td><button class=\"btn btn-sm btn-danger\" type=\"button\" onclick=\"$('#linea_" + numlineas + "').remove();\">\n\
          <span class=\"glyphicon glyphicon-trash\"></span></button></td>\n\
+\n\ <td></td>\n\
       <td><input type=\"text\"  class=\"form-control text-right\" id=\"nrocuenta_" + numlineas + "\" name=\"nrocuenta_" + numlineas + "\" value=\"" + nrocuenta +
             "\" onkeyup=\"\" onclick=\"this.select()\" autocomplete=\"off\"/>\n\
             <input type=\"hidden\" name=\"nrocuenta_" + numlineas + "\" value=\"" + nrocuenta + "\"/> </td>\n\
@@ -211,6 +212,7 @@ function buscar_articulos()
                   <th class=\"text-left\"  width=\"80\">Nro. Cheque</th>\n\
                   <th class=\"text-right\" width=\"80\">Banco</th>\n\
                   <th class=\"text-right\" width=\"80\">Nro. Cuenta</th>\n\
+                \n\<th class=\"text-right\" width=\"80\"></th>\n\
                   <th class=\"text-right\" width=\"80\">Fecha Emi.</th>\n\
                   <th class=\"text-right\" width=\"80\">Fecha Pago</th>\n\
                   <th class=\"text-right\" width=\"80\">Importe</th>\n\

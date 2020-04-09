@@ -241,7 +241,8 @@ class operaciones_m extends fs_model
                         . "SET fec_operacion = " . $this->var2str($this->fec_operacion)
                     . ", idestado = " . $this->var2str($this->idestado)
                     . ", idcliente = " . $this->var2str($this->idcliente)
-                    . ", observacion = " . $this->var2str($this->observacion)                                                         
+                    . ", observacion = " . $this->var2str($this->observacion)                    
+                    . ", ptefactura = " . $this->var2str($this->ptefactura)               
                     . "  WHERE idoperaciones = " . $this->var2str($this->idoperaciones) . ";";
 
                 return $this->db->exec($sql);

@@ -228,6 +228,33 @@ class operacion_linea_m extends \fs_model
 
         return $linealist;
     }
+    
+    //TRAE POR CHEQUE PARA CARGAR EL RESPALDO DE DICHO CHEQUE
+    public function all_from_operaciondetaxcheque($id)
+    {
+        
+        $linealist = array();
+        $sql = "SELECT idcheque_operacion,idoperaciones,cheques_nrocheque,cheques_codbanco,
+                b.nombre banconombre,c.nrocuenta,c.fec_emision,c.fec_pago,
+                c.importe,c.aordende,
+                cli.nombre nombrecliente  "
+                . "FROM " . $this->table_name . " o "
+                . "join cheques c on o.cheques_nrocheque=c.nrocheque 
+                    and o.cheques_codbanco=c.idbanco 
+                join bancos b on o.cheques_codbanco=b.idbanco
+                join clientes cli on c.idcliente=cli.idcliente "
+                . "WHERE cheques_nrocheque = " . $this->var2str($id)
+            . " ORDER BY idcheque_operacion ASC;";
+
+        $data = $this->db->select($sql);
+        if ($data) {
+            foreach ($data as $l) {
+                $linealist[] = new \operacion_linea_m($l);
+            }
+        }
+
+        return $linealist;
+    }
 
     private function all_from($sql, $offset = 0, $limit = FS_ITEM_LIMIT)
     {
@@ -338,7 +365,7 @@ class operacion_linea_m extends \fs_model
         } else
            return "index.php?page=operaciones_edit&id=" . $this->idoperaciones ."&vnrocheque=".$this->cheques_nrocheque."#detalles";  
          * */
-         
+         //$this->all_from_operaciondetaxcheque($this->cheques_nrocheque);
          return "index.php?page=operaciones_edit&id=" . $nroope ."&vnrocheque=".$nrocheque."#detalles";  
                
     }

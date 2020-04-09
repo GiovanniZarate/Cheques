@@ -22,7 +22,7 @@ class operaciones_edit extends fbase_controller
    
     public $albarandeta;
     
-      public $respaldo;
+    public $respaldo;
 
     public function __construct()
     {
@@ -110,6 +110,7 @@ class operaciones_edit extends fbase_controller
                  $this->elimina_respaldo($_GET['eliminarrespaldo']);
              }else if (isset($_GET['vnrocheque'])) { /// PARA TRAER RESPALDO DE CHEQUE
                   $this->respaldo = $respaldo->all_from_respaldo($_GET['id'], $_GET['vnrocheque']) ;//$albarandeta->get($_GET['id']);
+                  $this->albarandeta = $albarandeta->all_from_operaciondetaxcheque($_GET['vnrocheque']);
                  //$this->new_advice("traer respaldo de cheque");
              }
             
@@ -197,6 +198,11 @@ class operaciones_edit extends fbase_controller
             
              $this->albaran->fec_operacion = $_POST['fecha'];
 
+             $this->albaran->idestado =  $_POST['codestado'];
+             //SI ES DIFERENTE A ESTADO: PENDIENTO - CODIGO 1 ACTUALIZA CAMPO ptefactura de tabla operaciones para no editar mas
+            if($this->albaran->idestado!=1){
+                $this->albaran->ptefactura = 0; 
+            }
             /// ¿cambiamos el cliente?
        
              if ($_POST['cliente'] != $this->albaran->idcliente) {

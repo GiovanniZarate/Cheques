@@ -6,7 +6,8 @@
             <tr>
                 <th class="text-left" width="120">Nro. Cheque</th>
                 <th class="text-left" width="150">Banco</th>
-                <th width="50"></th>
+                <th width="25"></th>
+                <th width="25"></th>
                 <th class="text-left" width="90">Nro. Cuenta</th>                
                 <th class="text-left" width="110">Fecha Emi.</th>
                 <th class="text-left" width="90">Fecha Pago</th>              
@@ -35,6 +36,9 @@
                     </button>
                     {/if}
                 </td>  
+                <td>                                        
+                    <a href="{$value->urlrespaldo($value->idoperaciones, $value->cheques_nrocheque)}" class="cancel_clickable" title="Ver/Agregar Respaldo de Cheque Nro.: {$value->cheques_nrocheque}">[Respaldo]</a>
+                </td> 
                 <td>
                     <input class="form-control" disabled="" name="_{$counter}" value="{$value->nrocuenta}"/>                  
                 </td>                                                               
