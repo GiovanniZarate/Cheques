@@ -123,7 +123,7 @@ class nueva_operacion extends fbase_controller
 
                 if (!$this->cliente_s) {
                     $this->cliente_s = new cliente_m();
-                    //$this->cliente_s->codcliente = $this->cliente_s->get_new_codigo();
+                    $this->cliente_s->idcliente = $this->cliente_s->get_new_codigo();
                     $this->cliente_s->nombre = $this->cliente_s->razonsocial = $_POST['nuevo_cliente'];
                     //$this->cliente_s->tipoidfiscal = $_POST['nuevo_tipoidfiscal'];
                     $this->cliente_s->ruc = $_POST['nuevo_cifnif'];
@@ -363,6 +363,7 @@ class nueva_operacion extends fbase_controller
     {
         $continuar = TRUE;
 
+        $this->new_message("valor ".$_POST['cliente']) ;
         $cliente = $this->cliente->get($_POST['cliente']);
         if (!$cliente) {
             $this->new_error_msg('Cliente no encontrado.');

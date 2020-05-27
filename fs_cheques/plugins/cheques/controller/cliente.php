@@ -25,7 +25,9 @@ class cliente extends fs_controller{
         //CREA UNA NUEVA INSTANCIA DEL MODELO 
         $instancianuevamodel = new cliente_m();
                
-        $instancianuevamodel->idcliente = $_POST['vcodigo'];
+        //$instancianuevamodel->idcliente = $_POST['vcodigo'];
+        
+        $instancianuevamodel->idcliente = $instancianuevamodel->get_new_codigo();
         $instancianuevamodel->nombre = $_POST['vnombre'];
         $instancianuevamodel->direccion = $_POST['vdireccion'];
         $instancianuevamodel->ruc = $_POST['vruc'];

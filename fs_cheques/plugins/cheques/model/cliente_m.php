@@ -211,4 +211,17 @@ class cliente_m extends fs_model{
 
         return FALSE;
     }
+    
+    public function get_new_codigo()
+    {
+       $sql = "SELECT MAX(".$this->db->sql_to_int('idcliente').") as cod FROM ".$this->table_name.";";
+       $cod = $this->db->select($sql);
+       if($cod)
+       {
+          return 1 + intval($cod[0]['cod']);
+       }
+       else
+          return 1;
+    }
+
 }
